@@ -1,6 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createVolumeController, registerVolumeControls, validatePercent } from './volume.js';
+
+test('client declares the command namespace dependency used by the slider', () => {
+  const source = readFileSync(new URL('./client.js', import.meta.url), 'utf8');
+  const injection = source.match(/inject:\s*\[([^\]]+)\]/)?.[1];
+  assert.ok(injection, 'Client dependency declaration is required');
+  assert.match(injection, /['"]remote['"]/);
+  assert.match(injection, /['"]remote\.commands['"]/);
+  const manifest = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
+  assert.ok(source.includes(`id: '${manifest.name}'`));
+});
 
 test('volume percentages reject invalid values', () => {
   for (const value of [-1, 101, 0.5, NaN, '65', null, undefined]) assert.throws(() => validatePercent(value));
