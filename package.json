@@ -1,0 +1,25 @@
+{
+  "name": "@milobonbaril/dsh-mommy",
+  "version": "1.1.0",
+  "description": "English voice lines and a persistent volume slider for DeepSeek Harness.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "git+https://github.com/MiloBonbaril/DSH-Mommy.git" },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": ["index.js", "config.js", "player.js", "volume.js", "client.js", "cordis.patch.yml", "locale/*.json", "icon.svg", "sounds/*.wav", "README.md"],
+  "scripts": { "test": "node --test *.test.js", "check": "node --check index.js && node --check client.js && node --check volume.js && node --check config.js && node --check player.js" },
+  "engines": { "node": ">=22" },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-ui-conversation", "@deepseek-ai/dsh-api-remotes", "@deepseek-ai/dsh-client-locale"]
+    }
+  }
+}

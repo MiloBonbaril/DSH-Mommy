@@ -1,0 +1,9 @@
+- insert:
+    - id: dsh-mommy
+      name: '@milobonbaril/dsh-mommy'
+      config:
+        volume: 0.65
+        cooldownMs: 8000
+        waitingMs: 120000
+        includeChildren: false
+        disabledCategories: []
